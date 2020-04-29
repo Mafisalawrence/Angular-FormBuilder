@@ -1,3 +1,13 @@
-<p>
-  form-builder works!
-</p>
+<form [formGroup]="form" (ngSubmit)="onSubmit(form.value)">
+    <mat-form-field *ngFor="let field of formFields">
+        <mat-label>{{field.label}}</mat-label>
+        <div [ngSwitch]="field.type">
+            <input *ngSwitchCase="'text'" matInput formControlName="{{field.key}}" placeholder="{{field.placeholder}}">
+            <mat-select *ngSwitchCase="'select'" [value]="field.value" formControlName="{{field.key}}">
+                <mat-option *ngFor="let option of field.options" value="{{option.key}}">{{option.value}}</mat-option>
+            </mat-select>
+            <textarea *ngSwitchCase="'textarea'" matInput></textarea>
+        </div>
+    </mat-form-field>
+    <button type="submit"> click me</button>
+</form>
